@@ -1,3 +1,4 @@
+
 /*****************  iSimplex **************************
 *Layer 1 - POST Operators: Functions to Change values *
 *                                                     *
@@ -23,7 +24,6 @@ public class PostOperators{
 			String url = URLPost.urlPostGenerator(id,"newOffset");
 			String ack = URLPost.urlPost(url,"value="+value);
 			
-			System.out.println(ack);
 			if(ack.contains("\"result\":1"))
 				return true;
 		}
@@ -39,12 +39,41 @@ public class PostOperators{
 		if(value == 0 || value == 1){
 			String url = URLPost.urlPostGenerator(id,"newValue");
 			String ack = URLPost.urlPost(url,"value="+value);
-			
-			System.out.println(ack);
-			
+						
 			if(ack.contains("\"result\":1"))
 				return true;
 		}
+		return false;
+	}
+
+
+
+	/** /modify/Device Id/newState 
+	 * fanspeed: 15, 50 or 85 <=> slow, med or fast
+		mode: 0 = cold, 1 = hot/.
+		onoff: 0 or 1
+		swing: 0 or 1 
+		temperature: 16 to 30*/
+	public static boolean newState(int id,int onoff,int temperature,int fanspeed, int mode,int swing){
+		/*Check values*/
+		if(fanspeed != 0 && fanspeed != 15 && fanspeed != 50 && fanspeed != 85)
+			return false;
+		if(mode != 0 && mode != 1)   //0 cold, 1 hot
+			return false;
+		if(onoff != 0 && onoff != 1)
+			return false;
+		if(swing != 0 && swing != 1)
+			return false;
+		if(temperature < 16 || temperature > 30)
+			return false;
+			
+		String url = URLPost.urlPostGenerator(id,"newState");
+		String value ="onoff="+onoff+"&temperature="+temperature+"&fanspeed="+fanspeed+"&mode="+mode+"&swing="+swing;
+		
+		String ack = URLPost.urlPost(url,value);
+		
+		if(ack.contains("\"result\":1"))
+			return true;
 		return false;
 	}
 }	

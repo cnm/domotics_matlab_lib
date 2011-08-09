@@ -18,10 +18,11 @@ public class GetOperators{
 	public static Map<String,String> getInfo(int division,int device){
 			String url = URLGet.urlGetGenerator(division); //generate URL
 			String json = URLGet.urlGet(url);				//get JSON file from URL
+	
 			Map<String,String> data = readDevice(json,device);				//get info from JSON
 			if(data.size() == 0){
 				System.out.println("Read error");
-			}
+			}	
 			return data;
 	}
 	

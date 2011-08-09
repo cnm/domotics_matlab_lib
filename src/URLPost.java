@@ -18,8 +18,6 @@ public class URLPost{
 	/**Post "value" in the "_url" server
 	 * @return String with the ack*/
 	public static String urlPost(String _url,String value){
-			
-			
 		try{
 			URL url = new URL(_url); //set URL 
 			
@@ -58,7 +56,6 @@ public class URLPost{
 		catch(ProtocolException e){return "URLPost: ProtocolException - set.ResquestMethod error";} 
 		catch(IOException e){return "URLPost: IOException - write/read error";}
 	}
-
 	/**Gerate a URL with the device ID and Operator (newOffset, new Value,etc)
 	 * If the main URL changes, just change this method and It will work again*/
 	public static String urlPostGenerator(Integer id,String operator){

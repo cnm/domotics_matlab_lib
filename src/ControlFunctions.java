@@ -16,7 +16,7 @@ public class ControlFunctions{
 	/** If result == -999999 >> Error reading*/
 	
 /* ------------------- LIGHTS ---------------------*/	
-	public static boolean setLuzAll(int  value){
+	public static boolean setLightAll(int  value){
 		return PostOperators.newOffset(95,value);
 	}
 	
@@ -198,29 +198,33 @@ public class ControlFunctions{
 		return Integer.parseInt(data.get("Read-Only"));
 	}
 	
-	
 	public static int getInsideLuminosity(){
 		Map<String,String> data = GetOperators.getInfo(36,122);
 		return Integer.parseInt(data.get("Read-Only"));
 	}
 	
-	/* Air conditioner*/
+	
+	
+	
+/* ------------ Air conditioner -------------------*/	
+	/* GET */
+	
 	public static int getAirConditionerFanSpeed(){
 		Map<String,String> data = GetOperators.getInfo(33,118);
 		return Integer.parseInt(data.get("fanspeed"));
 	}
 	
-	public static int getAirConditionerOnOff(){
+	public static int getAirConditionerOnOff(){ //0 off, 1 on
 		Map<String,String> data = GetOperators.getInfo(33,118);
 		return Integer.parseInt(data.get("onoff"));
 	}
 	
-	public static int getAirConditionerSwing(){
+	public static int getAirConditionerSwing(){ //0 off, 1 on
 		Map<String,String> data = GetOperators.getInfo(33,118);
 		return Integer.parseInt(data.get("swing"));
 	}
 	
-	public static int getAirConditionerMode(){
+	public static int getAirConditionerMode(){   //0 cold, 1 hot
 		Map<String,String> data = GetOperators.getInfo(33,118);
 		return Integer.parseInt(data.get("mode"));
 	}
@@ -230,4 +234,92 @@ public class ControlFunctions{
 		return Integer.parseInt(data.get("temperature"));
 	}
 	
+	
+	/* Set*/
+	
+	public static boolean setAirConditionerTemperature(int temperature){
+		Map<String,String> data = GetOperators.getInfo(33,118);
+		return setAirConditioner(Integer.parseInt(data.get("onoff")),temperature,Integer.parseInt(data.get("fanspeed")),Integer.parseInt(data.get("mode")),Integer.parseInt(data.get("swing")));
+	}	
+
+	public static boolean setAirConditionerFanSpeedIncrease(){
+		Map<String,String> data = GetOperators.getInfo(33,118);
+		int fanspeed = Integer.parseInt(data.get("fanspeed"));
+		int newfanspeed;
+		switch(fanspeed){
+			case 0: newfanspeed = 15; break;
+			case 15: newfanspeed = 50; break;
+			case 50: newfanspeed = 85; break;
+			case 85: newfanspeed = 85; break;
+			default: return false;
+		}
+		return setAirConditionerFanSpeed(newfanspeed);
+	}
+
+	public static boolean setAirConditionerFanSpeedDecrement(){
+		Map<String,String> data = GetOperators.getInfo(33,118);
+		int fanspeed = Integer.parseInt(data.get("fanspeed"));
+		int newfanspeed;
+		switch(fanspeed){
+			case 0 : newfanspeed = 0; break;
+			case 15: newfanspeed = 15; break;
+			case 50: newfanspeed = 15; break;
+			case 85: newfanspeed = 50; break;
+			default: return false;
+		}
+		return setAirConditionerFanSpeed(newfanspeed);	
+	}
+
+	public static boolean setAirConditionerTurnOn(){
+		return setAirConditionerOnOff(1);
+	}
+	
+	public static boolean setAirConditionerTurnOff(){
+		return setAirConditionerOnOff(0);
+	}
+	
+	public static boolean setAirConditionerSwingOn(){
+		return setAirConditionerSwing(1);
+	}
+	
+	public static boolean setAirConditionerSwingOff(){
+		return setAirConditionerSwing(0);
+	}
+	
+	public static boolean setAirConditionerModeCold(){
+		return setAirConditionerMode(0);
+	}
+	
+	public static boolean setAirConditionerModeHot(){
+		return setAirConditionerMode(1);
+	}
+
+
+	/* Set values*/
+
+	public static boolean setAirConditioner(int onoff,int temperature,int fanspeed,int mode,int swing){
+		return PostOperators.newState(118,onoff,temperature,fanspeed,mode,swing);
+	}
+	
+	public static boolean setAirConditionerFanSpeed(int fanspeed){
+		Map<String,String> data = GetOperators.getInfo(33,118);
+		return setAirConditioner(Integer.parseInt(data.get("onoff")),Integer.parseInt(data.get("temperature")),fanspeed,Integer.parseInt(data.get("mode")),Integer.parseInt(data.get("swing")));
+	}	
+	
+	public static boolean setAirConditionerMode(int mode){
+		Map<String,String> data = GetOperators.getInfo(33,118);
+		return setAirConditioner(Integer.parseInt(data.get("onoff")),Integer.parseInt(data.get("temperature")),Integer.parseInt(data.get("fanspeed")),mode,Integer.parseInt(data.get("swing")));
+	}	
+	
+	public static boolean setAirConditionerOnOff(int onoff){
+		Map<String,String> data = GetOperators.getInfo(33,118);
+		return setAirConditioner(onoff,Integer.parseInt(data.get("temperature")),Integer.parseInt(data.get("fanspeed")),Integer.parseInt(data.get("mode")),Integer.parseInt(data.get("swing")));
+	}	
+	
+	public static boolean setAirConditionerSwing(int swing){
+		Map<String,String> data = GetOperators.getInfo(33,118);
+		return setAirConditioner(Integer.parseInt(data.get("onoff")),Integer.parseInt(data.get("temperature")),Integer.parseInt(data.get("fanspeed")),Integer.parseInt(data.get("mode")),swing);
+	}	
+	
+
 }
