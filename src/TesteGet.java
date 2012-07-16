@@ -3,11 +3,11 @@ public class TesteGet{
 	/* Use jdb to run line by line*/
 	public static void main(String args[]){
 		System.out.println("Light: " + ControlFunctions.getLightAll());
-//        System.out.println("Light LED TV: " + ControlFunctions.getLightLedTV());
-//        System.out.println("Light Light board: " + ControlFunctions.getLightBoard());
-//        System.out.println("Light Middle: " + ControlFunctions.getLightMiddle1());
-//        System.out.println("Light Middle: 2" + ControlFunctions.getLightMiddle2());
-//        System.out.println("Light Tv: " + ControlFunctions.getLightTv());
+        System.out.println("Light LED TV: " + ControlFunctions.getLightLedTV());
+        System.out.println("Light Light board: " + ControlFunctions.getLightBoard());
+        System.out.println("Light Middle: " + ControlFunctions.getLightMiddle1());
+        System.out.println("Light Middle: 2" + ControlFunctions.getLightMiddle2());
+        System.out.println("Light Tv: " + ControlFunctions.getLightTv());
 //        System.out.println("Sockets All: " + ControlFunctions.getSocketsAll());
 //        System.out.println("Get blinds board: " + ControlFunctions.getBlindsBoard());
 //        System.out.println("Get blinds middle: " + ControlFunctions.getBlindsMidle());
